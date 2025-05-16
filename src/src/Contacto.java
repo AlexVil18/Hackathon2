@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Contacto {
     private String nombre;
     private String apellido;
@@ -44,6 +46,20 @@ public class Contacto {
     @Override
     public String toString() {
         return "Nombre: " + nombre + " Apellido: " + apellido + " Teléfono: " + telefono;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Contacto)) return false;
+        Contacto contacto = (Contacto) o;
+        return nombre.equalsIgnoreCase(contacto.nombre) &&
+                apellido.equalsIgnoreCase(contacto.apellido);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre.toLowerCase(), apellido.toLowerCase());
     }
 
 }

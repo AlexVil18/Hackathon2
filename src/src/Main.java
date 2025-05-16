@@ -8,7 +8,7 @@ public class Main {
         boolean salir = false;
         
         // Pregunta inicial para definir el tamaño de la agenda
-        System.out.println("¿Desea especificar el tamaño máximo de la agenda? (S/N)");
+        System.out.println("¿Desea especificar el tamaño máximo de la agenda? (S/N) ");
         String respuesta = scanner.nextLine();
         
         if (respuesta.equalsIgnoreCase("S")) {
@@ -135,11 +135,15 @@ public class Main {
     
     private static void eliminarContacto(Scanner scanner, Agenda agenda) {
         System.out.println("\n--- ELIMINAR CONTACTO ---");
+
+        // Listar contactos
+        System.out.println("\nCONTACTOS:");
+        agenda.listarContactos();
         
-        System.out.print("Nombre: ");
+        System.out.print("Ingrese el nombre del contacto a eliminar: ");
         String nombre = scanner.nextLine();
         
-        System.out.print("Apellido: ");
+        System.out.print("Ingrese el apellido del contacto a eliminar: ");
         String apellido = scanner.nextLine();
         
         if (nombre.trim().isEmpty() || apellido.trim().isEmpty()) {
