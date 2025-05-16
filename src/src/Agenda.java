@@ -1,62 +1,104 @@
+import java.util.ArrayList;
 
+public class Agenda {
+    private int tamanoMax;
+    private ArrayList<Contacto> contactos;
 
-public class Agenda extends Contacto {
-
-    // Constructor
+    // Constructores
     public Agenda() {
+        this.tamanoMax = 10;
+        this.contactos = new ArrayList<>();
     }
 
-    public Agenda(String nombre, String apellido, String telefono) {
-        super(nombre, apellido, telefono);
+    public Agenda(int tamanoMax) {
+        this.tamanoMax = tamanoMax;
+        this.contactos = new ArrayList<>();
     }
 
-    // Metodos
-    public static void listarContactos() {
-        // Listar contactos alfabeticamente
-        public void listarContactos() {
-            for (int i = 0; i < contactos.size() - 1; i++) {
-                for (int j = 0; j < contactos.size() - i - 1; j++) {
-                    Contacto contacto1 = contactos.get(j);
-                    Contacto contacto2 = contactos.get(j + 1);
-                    // Verificar si estan ordedanos
-                    if (contacto1.getNombre().compareToIgnoreCase(contacto2.getNombre()) > 0) {
-                        // Intercambiar posiciones
-                        contactos.set(j, contacto2);
-                        contacots.set(j + 1, contacto1);
-                    }
+    // Añadir contacto
+    public void anadirContacto(Contacto cont) {
+        if (existeContacto(cont)) {
+            System.out.println("El contacto ya existe.");
+        } else if (agendaLlena()) {
+            System.out.println("La agenda está llena.");
+        } else {
+            contactos.add(cont);
+            System.out.println("Se ha registrado exitosamente el contacto.");
+        }
+    }
+
+    // Listar contactos alfabeticamente
+    public void listarContactos() {
+        for (int i = 0; i < contactos.size() - 1; i++) {
+            for (int j = 0; j < contactos.size() - i - 1; j++) {
+                Contacto contacto1 = contactos.get(j);
+                Contacto contacto2 = contactos.get(j + 1);
+                if (contacto1.getNombre().compareToIgnoreCase(contacto2.getNombre()) > 0) {
+                    contactos.set(j, contacto2);
+                    contactos.set(j + 1, contacto1);
                 }
             }
-            // imprimir la lista ya ordenada
-            for (Contacto c: contactos) {
+        }
+        for (Contacto c : contactos) {
+            System.out.println(c);
+        }
+    }
+
+    // Buscar contacto
+    public Contacto buscaContacto(String nombre) {
+        for (Contacto c : contactos) {
+            if (c.getNombre().equalsIgnoreCase(nombre)) {
                 System.out.println(c);
+                return c;
             }
         }
+        System.out.println("No se encontró el contacto.");
+        return null;
+    }
 
-        // Metodo para buscar contacto
-        public Contacto buscarContacto(String nombre) {
-            for (Contacto c: contactos) {
-                if (c.getNombre().equalsIgnoreCase(nombre)) {
-                    System.out.println(c);
-                    return c;
-                }
-            }
-            return null;
+    // Eliminar contacto
+    public void eliminarContacto(Contacto c) {
+        if (contactos.remove(c)) {
+            System.out.println("Contacto eliminado exitosamente.");
+        } else {
+            System.out.println("No se encontró el contacto.");
         }
+    }
 
-        // Eliminar contacto
-        public void eliminarContacto(Contacto c) {
-            contactos.remove(c);
-
-        }
-
-        // Modificar telefono
-        public void modificarTelefono(String nombre, String apellido, String nuevoTelefono) {
-            for (Contacto c: contactos) {
-                if (c.getNombre().equalsIgnoreCase(nombre) && c.getApellido().equalsIgnoreCase(apellido)){
-                    c.setTelefono(nuevoTelefono);
-                }
+    // Modificar telefono
+    public void modificarTelefono(String nombre, String apellido, String nuevoTelefono) {
+        boolean encontrado = false;
+        for (Contacto c : contactos) {
+            if (c.getNombre().equalsIgnoreCase(nombre) && c.getApellido().equalsIgnoreCase(apellido)) {
+                c.setTelefono(nuevoTelefono);
+                encontrado = true;
+                System.out.println("Teléfono modificado exitosamente.");
+                break;
             }
         }
+        if (!encontrado) {
+            System.out.println("No se encontró el contacto.");
+        }
+    }
 
+    // Verificar si existe contacto
+    public boolean existeContacto(Contacto cont) {
+        for (Contacto c : contactos) {
+            if (c.getNombre().equalsIgnoreCase(cont.getNombre()) &&
+                    c.getApellido().equalsIgnoreCase(cont.getApellido())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Verificar agenda llena
+    public boolean agendaLlena() {
+        return contactos.size() >= tamanoMax;
+    }
+
+    // Verificar espacios libres
+    public int espacioLibres() {
+        return tamanoMax - contactos.size();
     }
 }
