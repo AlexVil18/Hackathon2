@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-public class Registro {
+public class Agenda {
 
     private int tamanoMax;
     public ArrayList<Contacto> listaContactos;
 
 
     //Contructor
-    public Registro(int tamanoMax) {
+    public Agenda(int tamanoMax) {
         this.tamanoMax = tamanoMax;
         listaContactos = new ArrayList<>();
     }
